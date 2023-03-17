@@ -21,8 +21,9 @@ export class SvgService {
   }
 
   getPerimeter(data: Dimension): Observable<Number> {
-    return this.httpClient.get<Number>(
-      `${environment.apiUrl}/Perimeter?width=${data.width}&height=${data.height}`
-    );
+    const url = new URL(`${environment.apiUrl}/Perimeter`);
+    url.searchParams.set('width', data.width.toString());
+    url.searchParams.set('height', data.height.toString());
+    return this.httpClient.get<Number>(url.toString());
   }
 }
