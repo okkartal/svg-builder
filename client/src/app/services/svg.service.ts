@@ -10,13 +10,22 @@ import { Dimension } from '../models/dimension';
 export class SvgService {
   constructor(private httpClient: HttpClient) {}
 
+  getHeaders(): HttpHeaders {
+    let headers = new HttpHeaders()
+      .set('X-API-KEY', '38e45851-d4e5-5849-8371-c6cb4b53833d')
+      .set('Content-Type', 'application/json');
+    return headers;
+  }
+
   getDimension(): Observable<Dimension> {
-    return this.httpClient.get<Dimension>(`${environment.apiUrl}`);
+    return this.httpClient.get<Dimension>(`${environment.apiUrl}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   saveDimension(data: Dimension): Observable<Dimension> {
     return this.httpClient.put<Dimension>(`${environment.apiUrl}`, data, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      headers: this.getHeaders(),
     });
   }
 
@@ -24,6 +33,8 @@ export class SvgService {
     const url = new URL(`${environment.apiUrl}/Perimeter`);
     url.searchParams.set('width', data.width.toString());
     url.searchParams.set('height', data.height.toString());
-    return this.httpClient.get<Number>(url.toString());
+    return this.httpClient.get<Number>(url.toString(), {
+      headers: this.getHeaders(),
+    });
   }
 }

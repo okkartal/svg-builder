@@ -1,11 +1,12 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
-
+using server.Security;
 namespace server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ApiKey]
 public class SvgController : ControllerBase
 {
     private readonly ILogger<SvgController> _logger;
